@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Web App Marketplace</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1e2230;
+      color: #ffffff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #2a2f40;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    header button {
+      background-color: #3b435a;
+      border: none;
+      color: #ffffff;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    header button:hover {
+      background-color: #5567a6;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .page {
+      display: none;
+      padding: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #search-input {
+      width: 80%;
+      padding: 10px 15px;
+      margin: 20px auto;
+      display: block;
+      font-size: 16px;
+      border: 2px solid #35405d;
+      border-radius: 10px;
+      background-color: #2e3140;
+      color: #ffffff;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    #search-input:focus {
+      outline: none;
+      background-color: #35405d;
+      border-color: #5567a6;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+    }
+
+    #search-input::placeholder {
+      color: #7788aa;
+      font-style: italic;
+    }
+
+    #search-results {
+      margin-top: 20px;
+      text-align: left;
+      padding: 10px;
+      background-color: #23263a;
+      border-radius: 10px;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #search-results p {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #35405d;
+      color: #ffffff;
+      transition: background-color 0.3s ease;
+    }
+
+    #search-results p:hover {
+      background-color: #5567a6;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <button id="home-tab" class="tab-button">Главная</button>
+    <button id="search-tab" class="tab-button">Поиск</button>
+    <button id="profile-tab" class="tab-button">Профиль</button>
+  </header>
+
+  <section id="home" class="page active">
+    <h1>Добро пожаловать в маркетплейс!</h1>
+    <p>Здесь можно выбрать и приобрести товары.</p>
+  </section>
+
+  <section id="search" class="page">
+    <h2>Поиск</h2>
+    <input type="text" id="search-input" placeholder="Введите название товара..." />
+    <div id="search-results"></div>
+  </section>
+
+  <section id="profile" class="page">
+    <h2>Профиль</h2>
+    <p>Ваш уникальный ID: <span id="user-id">123456789</span></p>
+    <h3>История заказов:</h3>
+    <ul id="order-history">
+      <li>Заказ 1 - пример</li>
+      <li>Заказ 2 - пример</li>
+    </ul>
+    <button id="seller-button">Стать продавцом</button>
+  </section>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab-button');
+    const pages = document.querySelectorAll('.page');
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        pages.forEach((page) => page.classList.remove('active'));
+        tabs.forEach((t) => t.classList.remove('active-tab'));
+        pages[index].classList.add('active');
+        tab.classList.add('active-tab');
+      });
+    });
+
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      searchResults.innerHTML = ''; // Сбрасываем результаты
+
+      const mockProducts = ['Телефон', 'Наушники', 'Чехол для телефона'];
+      mockProducts
+        .filter((product) => product.toLowerCase().includes(query))
+        .forEach((product) => {
+          const result = document.createElement('p');
+          result.textContent = product;
+          searchResults.appendChild(result);
+        });
+    });
+
+    document.getElementById('seller-button').addEventListener('click', () => {
+      alert('Форма для продавцов скоро будет доступна!');
+    });
+  </script>
+</body>
+</html>
